@@ -105,6 +105,19 @@ public class Book implements IBook, Serializable {
                 this.importPrice, this.exportPrice, this.author, this.created, this.description);
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", importPrice=" + importPrice +
+                ", exportPrice=" + exportPrice +
+                ", author='" + author + '\'' +
+                ", created=" + created +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public int bookIdAuto(List<Book> bookList) {
         //Ma danh muc tu dong tang
         if (bookList.size() == 0) {

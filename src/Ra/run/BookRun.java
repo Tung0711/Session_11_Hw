@@ -176,7 +176,7 @@ public class BookRun {
                 Book bk = bookList.get(i);
                 if (bk.getAuthor().equalsIgnoreCase(findAuthor)) {
                     find = true;
-                    System.out.println(bk.getBookName());
+                    System.out.println(bk);
                 }
             }
             if (!find) {
