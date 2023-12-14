@@ -119,7 +119,7 @@ public class Book implements IBook, Serializable {
     }
 
     public int bookIdAuto(List<Book> bookList) {
-        //Ma danh muc tu dong tang
+        //Ma sach tu dong tang
         if (bookList.size() == 0) {
             return 1;
         } else {
@@ -137,22 +137,26 @@ public class Book implements IBook, Serializable {
         //Nhập tên sách
         System.out.println("Nhập vào tên sách: ");
         do {
-            String bookName = scanner.nextLine();
-            if (bookName.length() == 4) {
-                boolean isExit = false;
-                for (int i = 0; i < bookList.size(); i++) {
-                    if (bookList.get(0).getBookName().equals(bookName)) {
-                        isExit = true;
-                        break;
+            try {
+                String bookName = scanner.nextLine();
+                if (bookName.length() == 4) {
+                    boolean isExit = false;
+                    for (int i = 0; i < bookList.size(); i++) {
+                        if (bookList.get(i).getBookName().equals(bookName)) {
+                            isExit = true;
+                            break;
+                        }
                     }
-                }
-                if (isExit) {
-                    System.err.println("Tên sách đã tồn tại, vui lòng nhập lại!");
+                    if (isExit) {
+                        System.err.println("Tên sách đã tồn tại, vui lòng nhập lại!");
+                    } else {
+                        return bookName;
+                    }
                 } else {
-                    return bookName;
+                    System.err.println("Tên sách gồm 4 ký tự, vui lòng nhập lại!");
                 }
-            } else {
-                System.err.println("Tên sách gồm 4 ký tự, vui lòng nhập lại!");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } while (true);
     }
@@ -160,11 +164,15 @@ public class Book implements IBook, Serializable {
     public float inputImportPrice(Scanner scanner) {
         System.out.println("Nhập giá nhập của sách: ");
         do {
-            float importPrice = Float.parseFloat(scanner.nextLine());
-            if (importPrice > 0) {
-                return importPrice;
-            } else {
-                System.err.println("Giá nhập của sách phải có giá trị lớn hơn 0, vui lòng nhập lại!");
+            try {
+                float importPrice = Float.parseFloat(scanner.nextLine());
+                if (importPrice > 0) {
+                    return importPrice;
+                } else {
+                    System.err.println("Giá nhập của sách phải có giá trị lớn hơn 0, vui lòng nhập lại!");
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         } while (true);
     }
@@ -172,11 +180,15 @@ public class Book implements IBook, Serializable {
     public float inputExportPrice(Scanner scanner) {
         System.out.println("Nhập giá bán của sách: ");
         do {
-            float exportPrice = Float.parseFloat(scanner.nextLine());
-            if (exportPrice > importPrice) {
-                return exportPrice;
-            } else {
-                System.err.println("Giá bán của sách phải có giá trị lớn hơn giá nhập, vui lòng nhập lại!");
+            try {
+                float exportPrice = Float.parseFloat(scanner.nextLine());
+                if (exportPrice > importPrice) {
+                    return exportPrice;
+                } else {
+                    System.err.println("Giá bán của sách phải có giá trị lớn hơn giá nhập, vui lòng nhập lại!");
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         } while (true);
     }

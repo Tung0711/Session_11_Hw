@@ -46,7 +46,7 @@ public class BookRun {
                     updateBookById(scanner);
                     break;
                 case 4:
-                    deleteBookById(scanner);
+                    deleteBook(scanner);
                     break;
                 case 5:
                     sortBookByExportPrice();
@@ -114,22 +114,24 @@ public class BookRun {
         }
     }
 
-    public static void deleteBookById(Scanner scanner) {
-        System.out.println("Mời bạn nhập mã sách cần xóa: ");
+    public static void deleteBook(Scanner scanner) {
+        System.out.println("Nhập vào mã sách cần xóa:");
         try {
-            int deleteBookId = Integer.parseInt(scanner.nextLine());
-            Iterator<Book> iterator = bookList.iterator();
-            while (iterator.hasNext()) {
-                Book bk = iterator.next();
-                if (bk.getBookId() == deleteBookId) {
-                    iterator.remove();
-                    System.out.println("Thông tin sách đã xóa");
-                    return;
+            int bookIdDelete = Integer.parseInt(scanner.nextLine());
+            boolean isDelete = false;
+            for (Book bk : bookList) {
+                if (bk.getBookId() == bookIdDelete) {
+                    bookList.remove(bk);
+                    isDelete = true;
+                    System.out.println("Xóa sách thành công!");
+                    break;
                 }
             }
-            System.err.println("Mã sách không tồn tại, vui lòng nhập lại!");
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (!isDelete) {
+                System.err.println("Mã sách không tồn tại, vui lòng nhập lại!");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -171,19 +173,14 @@ public class BookRun {
         System.out.println("Nhập vào tên tác giả cần tìm: ");
         try {
             String findAuthor = scanner.nextLine();
-            boolean find = false;
-            for (int i = 0; i < bookList.size(); i++) {
-                Book bk = bookList.get(i);
-                if (bk.getAuthor().equalsIgnoreCase(findAuthor)) {
-                    find = true;
-                    System.out.println(bk);
-                }
+            boolean isFindBook = bookList.stream().anyMatch(book -> book.getAuthor().equalsIgnoreCase(findAuthor));
+            if (!isFindBook) {
+                System.err.println("Sách không tồn tại!");
+            } else {
+                bookList.stream().filter(book -> book.getAuthor().equalsIgnoreCase(findAuthor)).forEach(System.out::println);
             }
-            if (!find) {
-                System.err.println("Tên tác giả không tồn tại, vui lòng nhập lại!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
